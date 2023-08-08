@@ -1,5 +1,8 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocumentClient, ScanCommand, GetCommand } from "@aws-sdk/lib-dynamodb"
+import { unzip } from 'zlib'
+import { promisify } from 'util'
+const unzipAsync = promisify(unzip)
 
 const TABLE_NAME = process.env.TABLE_NAME
 const client = new DynamoDBClient({})
@@ -24,6 +27,8 @@ export async function GetData(event, context) {
         }
       })
       const result = await dynamo.send(query)
+      result.Item = await unzipAsync(result.Item.bufferToSave)
+      result.Item = JSON.parse(result.Item.toString())
       body = result
     } else {
       const query = new ScanCommand({
