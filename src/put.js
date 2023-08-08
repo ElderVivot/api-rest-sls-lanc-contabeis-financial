@@ -26,6 +26,12 @@ export async function PutData(event, context) {
                 TableName: TABLE_NAME,
                 Item: {
                     id: requestJSON.id,
+                    tenant: requestJSON.tenant,
+                    idCompanie: requestJSON.idCompanie,
+                    updatedAt: requestJSON.updatedAt,
+                    url: requestJSON.url,
+                    startPeriod: requestJSON.startPeriod,
+                    endPeriod: requestJSON.endPeriod,
                     bufferToSave
                 },
             })
