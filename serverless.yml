@@ -4,6 +4,9 @@ frameworkVersion: '3'
 custom:
   tableName: lanc-contabeis-financial
 
+plugins:
+ - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs18.x
@@ -27,14 +30,9 @@ provider:
             - Fn::GetAtt: [ LancContabeisFinancialTable, Arn ]
   environment:
     TABLE_NAME: ${self:custom.tableName}
+    API_HOST_SETTINGS_LANC_CONTABEIS: ${file(./env.json):API_HOST_SETTINGS_LANC_CONTABEIS}
 
 functions:
-  get:
-    handler: src/get.GetData
-    events:
-      - httpApi:
-          path: /v1/lanc-contabeis-financial
-          method: get
   put:
     handler: src/put.PutData
     events:

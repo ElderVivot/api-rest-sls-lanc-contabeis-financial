@@ -31,11 +31,7 @@ export async function GetData(event, context) {
       result.Item = JSON.parse(result.Item.toString())
       body = result
     } else {
-      const query = new ScanCommand({
-        TableName: TABLE_NAME
-      })
-      const result = await dynamo.send(query)
-      body = result
+      body = []
     }
   } catch (error) {
     statusCode = 400
