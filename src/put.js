@@ -33,6 +33,12 @@ async function updateValuesLancs(requestJSON) {
                         alreadyUpdateThisLine = true
                         break
                     }
+                    if (dataSetting.fieldToCompare === 'accountPlan' && valueComparation === movement.accountPlan.toUpperCase()) {
+                        if (movement.amountMoviment < 0) requestJSON.lancs[index].accountDebit = dataSetting.account
+                        else requestJSON.lancs[index].accountCredit = dataSetting.account
+                        alreadyUpdateThisLine = true
+                        break
+                    }
                     if (dataSetting.fieldToCompare === 'historic' && valueComparation === movement.historic.toUpperCase()) {
                         if (movement.amountMoviment < 0) requestJSON.lancs[index].accountDebit = dataSetting.account
                         else requestJSON.lancs[index].accountCredit = dataSetting.account
@@ -51,6 +57,11 @@ async function updateValuesLancs(requestJSON) {
                             break
                         }
                         if (dataSetting.fieldToCompare === 'category' && movement.category.toUpperCase().indexOf(valueComparation) >= 0) {
+                            if (movement.amountMoviment < 0) requestJSON.lancs[index].accountDebit = dataSetting.account
+                            else requestJSON.lancs[index].accountCredit = dataSetting.account
+                            break
+                        }
+                        if (dataSetting.fieldToCompare === 'accountPlan' && movement.accountPlan.toUpperCase().indexOf(valueComparation) >= 0) {
                             if (movement.amountMoviment < 0) requestJSON.lancs[index].accountDebit = dataSetting.account
                             else requestJSON.lancs[index].accountCredit = dataSetting.account
                             break
